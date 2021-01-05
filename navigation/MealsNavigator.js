@@ -4,12 +4,21 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createAppContainer } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import FavouritesScreen from "../screens/FavouritesScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 import Colours from "../constants/Colours";
+
+const defaultStackNavOptions = {
+	headerStyle: {
+		backgroundColor: Platform.OS === "android" ? Colours.primaryColour : "",
+	},
+	headerTintColor: Platform.OS === "android" ? "white" : Colours.primaryColour,
+};
 
 const MealsNavigator = createStackNavigator(
 	{
@@ -23,13 +32,17 @@ const MealsNavigator = createStackNavigator(
 		MealDetail: MealDetailScreen,
 	},
 	{
-		defaultNavigationOptions: {
-			headerStyle: {
-				backgroundColor: Platform.OS === "android" ? Colours.primaryColour : "",
-			},
-			headerTintColor:
-				Platform.OS === "android" ? "white" : Colours.primaryColour,
-		},
+		defaultNavigationOptions: defaultStackNavOptions,
+	}
+);
+
+const FavNavigator = createStackNavigator(
+	{
+		Favourites: FavouritesScreen,
+		MealDetail: MealDetailScreen,
+	},
+	{
+		defaultNavigationOptions: defaultStackNavOptions,
 	}
 );
 
@@ -42,17 +55,16 @@ const tabScreenConfig = {
 					<Ionicons name="ios-restaurant" size={25} color={tabInfo.tintColor} />
 				);
 			},
-			tabBarColor: Colours.primaryColour 
+			tabBarColor: Colours.primaryColour,
 		},
 	},
 	Favourites: {
-		screen: FavouritesScreen,
+		screen: FavNavigator,
 		navigationOptions: {
 			tabBarIcon: (tabInfo) => {
 				return <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />;
 			},
-			tabBarColor: Colours.accentColour 
-
+			tabBarColor: Colours.accentColour,
 		},
 	},
 };
@@ -69,4 +81,13 @@ const MealsFavTabNavigator =
 				},
 		  });
 
-export default createAppContainer(MealsFavTabNavigator);
+const FiltersNavigator = createStackNavigator({
+	Filters: FiltersScreen,
+});
+
+const MainNavigator = createDrawerNavigator({
+	MealsFav: MealsFavTabNavigator,
+	Filters: FiltersNavigator,
+});
+
+export default createAppContainer(MainNavigator);

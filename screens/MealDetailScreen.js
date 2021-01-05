@@ -27,7 +27,7 @@ MealDetailScreen.navigationOptions = (navigationData) => {
 	const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 	return {
 		headerTitle: selectedMeal.title,
-		headerRight: (
+		headerRight: () => (
 			<HeaderButtons HeaderButtonComponent={HeaderButton}>
 				<Item
 					title="Favourite"
