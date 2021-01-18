@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Switch, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import Colours from "../constants/Colours";
-import { SET_FILTERS, setFilters } from "../store/actions/meals";
+import { setFilters } from "../store/actions/meals";
 
 const FilterSwitch = (props) => {
 	return (

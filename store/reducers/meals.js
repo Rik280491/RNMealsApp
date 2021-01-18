@@ -1,7 +1,5 @@
 import { MEALS } from "../../data/dummy-data"
 import { TOGGLE_FAVOURITE, SET_FILTERS } from "../actions/meals";
-import { ActivityIndicatorComponent } from "react-native";
-import FiltersScreen from "../../screens/FiltersScreen";
 
 const initialState = {
     meals: MEALS,
